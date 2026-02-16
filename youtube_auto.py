@@ -130,7 +130,7 @@ def send_telegram_alert(video_id, title):
 
     video_link = f"https://youtu.be/{video_id}"
     msg = (
-        f"<b>🚀 UPLOAD SUCCESS (USA TARGET)</b>\n\n"
+        f"<b>🚀Dark Discipline</b>\n\n"
         f"<b>Title:</b> {title}\n"
         f"<b>Link:</b> {video_link}\n"
         f"<b>Status:</b> PUBLIC ✅"
