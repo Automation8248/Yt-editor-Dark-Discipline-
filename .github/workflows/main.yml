@@ -1,1 +1,38 @@
+name: USA YouTube Automation
 
+on:
+  # 1. Manual Run Button (Test karne ke liye)
+  workflow_dispatch:
+  
+  # 2. Daily Schedule (Subah 5:00 AM IST)
+  # GitHub UTC use karta hai. 
+  # 5:00 AM IST = 11:30 PM UTC (Previous Day)
+  schedule:
+    - cron: '30 23 * * *'
+
+jobs:
+  run_automation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run YouTube Script
+        env:
+          # Yeh saare Secrets aapko GitHub Settings > Secrets and variables > Actions mein add karne hain
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python youtube_auto.py
